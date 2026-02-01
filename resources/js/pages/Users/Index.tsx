@@ -1,11 +1,14 @@
 import { Link } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
+import { UserRoundPen } from 'lucide-react';
 import AppLayout from '@/layouts/app-layout';
 
 interface User {
     id: number;
     name: string;
+    email: string;
     grade: string;
+    role: string;
 }
 
 interface Props {
@@ -15,7 +18,7 @@ interface Props {
 export default function Index({ users }: Props) {
     return (
         <AppLayout>
-            <Head title="Users Index" />
+            <Head title="Users" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="my-3">
                     <a
@@ -25,18 +28,29 @@ export default function Index({ users }: Props) {
                         Create
                     </a>
                 </div>
-                <div>
+                {/* Display */}
+                <div className="w-1/2">
+                    <div className="grid grid-cols-[2fr_2fr_2fr_1fr] items-center border-b pb-2 font-bold">
+                        <div>Name</div>
+                        <div>Grade</div>
+                        <div>Role</div>
+                        <div></div>
+                    </div>
                     {users.map((user) => (
-                        <Link
-                            href={`/users/${user.id}`}
-                            className="hover:text-slate-300 hover:underline"
+                        <div
+                            key={user.id}
+                            className="grid grid-cols-[2fr_2fr_2fr_1fr] items-center py-1.5 transition-colors hover:bg-slate-50"
                         >
-                            <div key={user.id} className="flex flex-row p-2">
-                                <div className="text-lg">{user.name} </div>
-                                <> | </>
-                                <div className="text-lg"> {user.grade}</div>
-                            </div>
-                        </Link>
+                            <div className="text-lg">{user.name} </div>
+                            <div className="text-lg">{user.grade}</div>
+                            <div className="text-lg">{user.role}</div>
+                            <Link
+                                href={`/users/${user.id}`}
+                                className="hover:text-slate-300 hover:underline"
+                            >
+                                <UserRoundPen />
+                            </Link>
+                        </div>
                     ))}
                 </div>
             </div>

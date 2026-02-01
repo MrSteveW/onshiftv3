@@ -6,7 +6,7 @@ export default function Dashboard() {
         <AppLayout>
             <Head title="Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div>Well done</div>
+                <div>Showing your personal calendar of duties...</div>
             </div>
         </AppLayout>
     );

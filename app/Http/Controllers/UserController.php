@@ -50,12 +50,18 @@ class UserController extends Controller
     {
         request()->validate([
             'name'=>['required'],
-            'grade'=>['required']
+            'email'=>['required'],
+            'password'=>['required'],
+            'grade'=>['required'],
+            'role'=>['required'],
         ]);
 
         User::create([
             'name' => request('name'),
+            'email' => request('email'),
+            'password' => request('password'),
             'grade' => request('grade'),
+            'role' => request('role'),
         ]);
         return redirect('/users');
     }
