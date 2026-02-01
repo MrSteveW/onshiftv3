@@ -1,26 +1,26 @@
 import { Head } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 
-interface Staffmember {
+interface User {
     id: number;
     name: string;
-    role: string;
+    grade: string;
 }
 
 interface Props {
-    staffmember: Staffmember;
+    user: User;
 }
 
-export default function Show({ staffmember }: Props) {
+export default function Show({ user }: Props) {
     return (
         <AppLayout>
-            <Head title="Staff" />
+            <Head title="Users Show" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div>{staffmember.name}</div>
-                <div>{staffmember.role}</div>
+                <div>{user.name}</div>
+                <div>{user.grade}</div>
                 <div className="my-3">
                     <a
-                        href={`/staff/${staffmember.id}/edit`}
+                        href={`/users/${user.id}/edit`}
                         className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                     >
                         Edit

@@ -2,18 +2,18 @@
 
 ## Description:
 
-Booking system for managers to book each staffmember to one task per day.
+Booking system for managers to book each user to one task per day.
 
 ## Current version features
 
-Staff table id | name | role | date_started | date_ended | (soft)deleted_at  
+User table id | name | grade | date_started | date_ended | (soft)deleted_at  
 Task table id | name | (soft)deleted_at  
-Duty table id | staffmember_id | task_id | dutydate | shift_type | hours
+Duty table id | user_id | task_id | dutydate | shift_type | hours
 
 - [x] Tech stack - Laravel | Inertia | React | Tailwind
 - [x] Auth with Laravel built-in auth
-- [x] Model, resource controller and migration for Staffmember, Task and Duty.
-- [x] Softdelete for Staffmember and Task
+- [x] Model, resource controller and migration for User, Task and Duty.
+- [x] Softdelete for User and Task
 
 ## Setup instructions
 

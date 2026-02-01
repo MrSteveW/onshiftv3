@@ -5,7 +5,7 @@ import AppLayout from '@/layouts/app-layout';
 export default function Create() {
     return (
         <AppLayout>
-            <Head title="Staff" />
+            <Head title="Tasks" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <Form action="/tasks" method="post">
                     <div className="space-y-12">

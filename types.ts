@@ -1,6 +1,6 @@
 export type Duty = {
     id: number;
-    staffmember_id: number;
+    user_id: number;
     task_id: number | null;
     dutydate: Date;
     shift_type?: string;
@@ -8,15 +8,15 @@ export type Duty = {
 };
 
 export type CreateDutyProps = {
-    staff?: Staffmember[];
+    users?: User[];
     tasks?: Task[];
     date: Date;
 };
 
-export interface Staffmember {
+export interface User {
     id: number;
     name: string;
-    role: string;
+    grade: string;
 }
 
 export interface Task {

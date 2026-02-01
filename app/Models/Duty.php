@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Duty extends Model
 {
     // set custom table name
-    protected $table = 'staff__task_duty';
+    protected $table = 'task_user_duty';
 
-    protected $fillable = ['staffmember_id', 'task_id', 'dutydate', 'shift_type', 'hours'];
+    protected $fillable = ['user_id', 'task_id', 'dutydate', 'shift_type', 'hours'];
 
     public $timestamps = false;
 
-    public function staffmember()
+    public function user()
     {
-        return $this->belongsTo(Staffmember::class)->withTrashed();
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function task()

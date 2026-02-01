@@ -16,7 +16,7 @@ export const AvailableColumn = memo(function Column({ duties }: ColumnProps) {
     return (
         <div className="flex h-screen w-80 flex-col rounded-lg bg-blue-700 p-4">
             <h2 className="mb-4 font-semibold text-neutral-100">
-                Available staff
+                Available users
             </h2>
             <div ref={setNodeRef} className="flex flex-1 flex-col gap-4">
                 {duties.map((duty) => {

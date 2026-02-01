@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
-use App\Http\Controllers\StaffmemberController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\DutyController;
 
@@ -13,17 +13,22 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('dashboard', function () {
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', function () {
     return Inertia::render('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    })->name('dashboard');
+
+    Route::resource('users', UserController::class);
+    Route::resource('tasks', TaskController::class);
+    Route::resource('duties', DutyController::class);
+
+});
+
+// Route::get('/', [UserController::class, 'board']);
+
+Route::get('/board', [UserController::class, 'board']);
 
 
-// Route::get('/', [StaffmemberController::class, 'board']);
-
-Route::get('/board', [StaffmemberController::class, 'board']);
-
-Route::resource('staff', StaffmemberController::class);
-Route::resource('tasks', TaskController::class);
-Route::resource('duties', DutyController::class);
 
 require __DIR__.'/settings.php';

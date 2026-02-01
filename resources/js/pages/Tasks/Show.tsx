@@ -1,19 +1,19 @@
 import { Head } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 
-interface Staffmember {
+interface User {
     id: number;
     name: string;
 }
 
 interface Props {
-    task: Staffmember;
+    task: User;
 }
 
 export default function Show({ task }: Props) {
     return (
         <AppLayout>
-            <Head title="Staff" />
+            <Head title="Tasks" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div>{task.name}</div>
                 <div className="my-3">

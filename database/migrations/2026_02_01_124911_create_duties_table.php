@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('staff__task_duty', function (Blueprint $table) {
+        Schema::create('task_user_duty', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('staffmember_id')->constrained('staff');
+            $table->foreignId('user_id')->constrained('users');
             $table->foreignId('task_id')->constrained('tasks');
             $table->date('dutydate');
             $table->string('shift_type')->nullable();
             $table->decimal('hours', 3, 1)->nullable();
             
             // Prevent duplicate assignments
-            $table->unique(['staffmember_id', 'task_id', 'dutydate']);
+            $table->unique(['user_id', 'task_id', 'dutydate']);
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('staff__task_duty');
+        Schema::dropIfExists('task_user_duty');
     }
 };

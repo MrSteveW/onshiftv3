@@ -8,7 +8,7 @@ import type { CreateDutyProps } from 'types';
 
 import 'react-date-picker/dist/DatePicker.css';
 
-export default function Create({ staff, tasks }: CreateDutyProps) {
+export default function Create({ users, tasks }: CreateDutyProps) {
     const [date, setDate] = useState<Date>(new Date());
 
     const formatDate = (date: Date): string => {
@@ -17,12 +17,12 @@ export default function Create({ staff, tasks }: CreateDutyProps) {
     const formattedDate = formatDate(date);
     return (
         <AppLayout>
-            <Head title="Staff" />
+            <Head title="Duties" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <DatePicker onChange={setDate} value={date} />
                 <AssigningOneDuty
                     date={formattedDate}
-                    staff={staff}
+                    users={users}
                     tasks={tasks}
                 />
                 {/* {duties && <AssigningDuties initialDuties={duties} />} */}

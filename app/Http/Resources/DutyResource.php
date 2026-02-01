@@ -16,12 +16,12 @@ class DutyResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'staffmember_id' => $this->staffmember_id,
+            'user_id' => $this->user_id,
             'task_id' => $this->task_id,
             'dutydate' => $this->dutydate,
             'shift_type' => $this->shift_type,
             'hours' => $this->hours,
-            'staffmember' => new StaffmemberResource($this->whenLoaded('staffmember')),
+            'user' => new UserResource($this->whenLoaded('user')),
             'task' => new TaskResource($this->whenLoaded('task')),
         ];
     }

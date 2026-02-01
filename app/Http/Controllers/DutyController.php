@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Duty;
-use App\Models\Staffmember;
+use App\Models\User;
 use App\Models\Task;
 use App\Http\Resources\DutyResource;
-use App\Http\Resources\StaffmemberResource;
+use App\Http\Resources\UserResource;
 use App\Http\Resources\TaskResource;
 use Inertia\Inertia;
 
@@ -25,7 +25,7 @@ class DutyController extends Controller
             'date' => ['required', 'date_format:Y-m-d']
             ]);
 
-             $duties = Duty::with(['staffmember', 'task'])
+             $duties = Duty::with(['user', 'task'])
             ->whereDate('dutydate', $validatedData['date'])
             ->get();
         } else {
@@ -42,7 +42,7 @@ class DutyController extends Controller
     public function create()
     {
          return Inertia::render('Duties/Create' ,[
-               'staff' => StaffmemberResource::collection(Staffmember::all()),
+               'users' => UserResource::collection(User::all()),
                'tasks' => TaskResource::collection(Task::all())
         ]);
     }
@@ -52,7 +52,7 @@ class DutyController extends Controller
     // Validate that we receive an array of duties
     request()->validate([
         'duties' => ['required', 'array'],
-        'duties.*.staffmember_id' => ['required', 'integer'],
+        'duties.*.user_id' => ['required', 'integer'],
         'duties.*.task_id' => ['required', 'integer'], 
         'duties.*.dutydate' => ['required', 'date'],
     ]);
@@ -61,7 +61,7 @@ class DutyController extends Controller
     $duties = request('duties');
     foreach ($duties as $dutyData) {
         Duty::create([
-            'staffmember_id' => $dutyData['staffmember_id'],
+            'user_id' => $dutyData['user_id'],
             'task_id' => $dutyData['task_id'],
             'dutydate' => $dutyData['dutydate'],
             'shift_type' => $dutyData['shift_type'] ?? null,
@@ -72,30 +72,30 @@ class DutyController extends Controller
     return redirect('/duties');
 }
 
-    public function show(Duty $duty)
-    {
-        return view('duties.show', ['duty' => $duty]);
-    }
+    // public function show(Duty $duty)
+    // {
+    //     return view('duties.show', ['duty' => $duty]);
+    // }
 
-    public function edit(Duty $duty)
-    {
-        return view('duties.edit', [
-            'duty' => $duty,
-            'staff' => Staffmember::all(),
-            'tasks' => Task::all(),
-        ]);
-    }
+    // public function edit(Duty $duty)
+    // {
+    //     return view('duties.edit', [
+    //         'duty' => $duty,
+    //         'users' => User::all(),
+    //         'tasks' => Task::all(),
+    //     ]);
+    // }
 
     public function update(Duty $duty)
     {
         request()->validate([
-        'staffmember_id'=>['required'],
+        'user_id'=>['required'],
         'task_id'=>['required'],
         'dutydate'=>['required'],
         ]);
 
         $duty->update([
-            'staffmember_id' => request('staff_id'),
+            'user_id' => request('user_id'),
             'task_id' => request('task_id'),
             'dutydate' => request('dutydate')
         ]);

@@ -7,10 +7,10 @@ import DatePicker from 'react-date-picker';
 import AppLayout from '@/layouts/app-layout';
 import { TaskSlot } from '@/components/TaskSlot';
 
-interface Staffmember {
+interface User {
     id: number;
     name: string;
-    role: string;
+    grade: string;
     date_started: string;
     date_ended?: string | null;
     deleted_at?: string | null;
@@ -24,12 +24,12 @@ interface Task {
 
 interface Duty {
     id: number;
-    staffmember_id: number;
+    user_id: number;
     task_id: number;
     dutydate: string;
     shift_type?: string | null;
     hours?: number | null;
-    staffmember: Staffmember;
+    user: User;
     task: Task;
 }
 
@@ -114,7 +114,7 @@ export default function Index({
                     <div key={duty.id} className="flex flex-row p-2 text-start">
                         <div className="px-2">{duty.dutydate} </div>
                         <div className="px-2">
-                            {duty.staffmember.name} ({duty.staffmember.role}){' '}
+                            {duty.user.name} ({duty.user.grade}){' '}
                         </div>
                         <div>{duty.task.name}</div>
                     </div>

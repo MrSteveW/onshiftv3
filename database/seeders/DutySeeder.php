@@ -14,7 +14,7 @@ class DutySeeder extends Seeder
     public function run(): void
     {
          Duty::create([
-            'staffmember_id' => 1,
+            'user_id' => 1,
             'task_id' => 4,
             'dutydate' => now()->format('Y-m-d'),
             ]);

@@ -7,31 +7,31 @@ import { TaskSlot } from '@/components/TaskSlot';
 
 export default function AssigningOneDuty({
     date,
-    staff,
+    users,
     tasks,
 }: CreateDutyProps) {
-    // Initial setup of stateful duties by mapping through staff
+    // Initial setup of stateful duties by mapping through users
     const initialSetup: Duty[] =
-        staff?.map((staffmember) => ({
-            id: staffmember.id,
-            staffmember_id: staffmember.id,
+        users?.map((user) => ({
+            id: user.id,
+            user_id: user.id,
             task_id: null, // Initially unassigned
             dutydate: date,
         })) || [];
 
     const [duties, setDuties] = useState<Duty[]>(initialSetup);
 
-    // Update duties when date, staff, or tasks change
+    // Update duties when date, users, or tasks change
     useEffect(() => {
         const newDuties: Duty[] =
-            staff?.map((staffmember) => ({
-                id: staffmember.id,
-                staffmember_id: staffmember.id,
+            users?.map((user) => ({
+                id: user.id,
+                user_id: user.id,
                 task_id: null, // Reset to unassigned when props change
                 dutydate: date,
             })) || [];
         setDuties(newDuties);
-    }, [date, staff, tasks]);
+    }, [date, users, tasks]);
 
     const handleDragEnd = useCallback((event: DragEndEvent) => {
         const { active, over } = event;
@@ -60,7 +60,7 @@ export default function AssigningOneDuty({
         const dutiesForLaravel = duties
             .filter((duty) => duty.task_id !== null) // Only save assigned duties
             .map((duty) => ({
-                staffmember_id: duty.staffmember_id,
+                user_id: duty.user_id,
                 task_id: duty.task_id,
                 dutydate: duty.dutydate,
                 // Exclude the React id
@@ -95,14 +95,14 @@ export default function AssigningOneDuty({
 
             <DndContext onDragEnd={handleDragEnd}>
                 <div className="flex gap-8 p-4">
-                    {/* Available Column for unassigned staff */}
+                    {/* Available Column for unassigned users */}
                     <AvailableColumn
                         duties={duties
                             .filter((duty) => duty.task_id === null)
                             .map((duty) => ({
                                 ...duty,
-                                staffmember: staff?.find(
-                                    (s) => s.id === duty.staffmember_id,
+                                user: users?.find(
+                                    (s) => s.id === duty.user_id,
                                 )!,
                                 task: null as any,
                             }))}
@@ -113,12 +113,11 @@ export default function AssigningOneDuty({
                         const assignedDuty = duties.find(
                             (duty) => duty.task_id === task.id,
                         );
-                        const dutyWithStaffmember = assignedDuty
+                        const dutyWithUser = assignedDuty
                             ? {
                                   ...assignedDuty,
-                                  staffmember: staff?.find(
-                                      (s) =>
-                                          s.id === assignedDuty.staffmember_id,
+                                  user: users?.find(
+                                      (s) => s.id === assignedDuty.user_id,
                                   )!,
                                   task: task,
                               }
@@ -127,7 +126,7 @@ export default function AssigningOneDuty({
                             <TaskSlot
                                 key={task.id}
                                 task={task}
-                                duty={dutyWithStaffmember}
+                                duty={dutyWithUser}
                             />
                         );
                     })}
