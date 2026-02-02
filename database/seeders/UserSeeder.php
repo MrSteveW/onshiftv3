@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use App\Enums\UserRole;
 
 class UserSeeder extends Seeder
 {
@@ -13,34 +14,38 @@ class UserSeeder extends Seeder
     public function run(): void
     {
        User::create([
-            'name' => 'Steve',
-            'email' => 'steve@example.com',
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
             'password' => 'password',
-            'grade' => 'BMS5',
+            'grade' => '',
+            'role' => UserRole::Admin,
             'date_started' => now()->format('Y-m-d'),
             ]);
 
         User::create([
-            'name' => 'Simon',
-            'email' => 'simon@example.com',
+            'name' => 'Admin2',
+            'email' => 'Admin2@example.com',
             'password' => 'password',
             'grade' => 'BMS7',
+            'role' => UserRole::Admin,
             'date_started' => now()->format('Y-m-d'),
             ]);
 
          User::create([
-            'name' => 'Sophie',
-            'email' => 'sophie@example.com',
+            'name' => 'Editor',
+            'email' => 'editor@example.com',
             'password' => 'password',
             'grade' => 'Bank',
+            'role' => UserRole::Editor,
             'date_started' => now()->format('Y-m-d'),
             ]);
 
          User::create([
-            'name' => 'Sam',
-            'email' => 'sam@example.com',
+            'name' => 'View',
+            'email' => 'viewer@example.com',
             'password' => 'password',
             'grade' => 'Intern',
+            'role' => UserRole::Viewer,
             'date_started' => now()->format('Y-m-d'),
             ]);
     }

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\UserRole;
 
 return new class extends Migration
 {
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('grade')->nullable();
-            $table->string('role')->nullable();
+            $table->string('role')->default(UserRole::Viewer->value);
             $table->date('date_started')->nullable();
             $table->date('date_ended')->nullable();
             $table->softDeletes();

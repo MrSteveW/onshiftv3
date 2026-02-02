@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Resources\UserResource;
 use Inertia\Inertia;
+use App\Enums\UserRole;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -43,17 +45,19 @@ class UserController extends Controller
 
     public function create()
     {
-        return Inertia::render('Users/Create');
+        return Inertia::render('Users/Create', [
+        'roles' => array_column(UserRole::cases(), 'value'),
+        ]);;
     }
 
     public function store()
     {
         request()->validate([
-            'name'=>['required'],
-            'email'=>['required'],
+            'name'=>['required', 'string', 'max:255'],
+            'email'=>['required', 'email', 'unique:users'],
             'password'=>['required'],
             'grade'=>['required'],
-            'role'=>['required'],
+            'role'=>['required', Rule::enum(UserRole::class)],
         ]);
 
         User::create([
@@ -69,17 +73,21 @@ class UserController extends Controller
     public function edit(User $user)
     {
          return Inertia::render('Users/Edit', [
-         'user' => new UserResource($user)
+         'user' => new UserResource($user),
+          'roles' => array_column(UserRole::cases(), 'value'),
         ]);
     }
 
     public function update(User $user)
     {
         request()->validate([
-            'name'=>['required'],
-            'email'=>['required'],
+            'name'=>['required', 'string', 'max:255'],
+            'email'=>[
+                'required',
+                'email', 
+                Rule::unique('users')->ignore($user->id)],
             'grade'=>['required'],
-            'role'=>['required']
+            'role'=>['required', Rule::enum(UserRole::class)],
         ]);
 
         $user->update([
