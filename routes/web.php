@@ -1,31 +1,41 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\DutyController;
 
 Route::get('/', function () {
-    return Inertia::render('welcome', [
-        'canRegister' => Features::enabled(Features::registration()),
+     if (Auth::check()) {
+        return redirect()->route('dashboard');
+     }
+        return Inertia::render('welcome', [
+        'status' => session('status'),
+        'canResetPassword' => Route::has('password.request'),
     ]);
 })->name('home');
 
+
+// Route::get('/EXAMPLE', function () {...
+// })->middleware(['verified']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
     return Inertia::render('dashboard');
     })->name('dashboard');
 
-    Route::resource('users', UserController::class);
     Route::resource('tasks', TaskController::class);
     Route::resource('duties', DutyController::class);
 
 });
 
-// Route::get('/', [UserController::class, 'board']);
+
+Route::resource('users', UserController::class)->except(['show']);
+Route::get('users/{user}', function () {
+    return redirect()->route('users.index');
+});
 
 Route::get('/board', [UserController::class, 'board']);
 

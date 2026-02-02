@@ -16,7 +16,9 @@ export type CreateDutyProps = {
 export interface User {
     id: number;
     name: string;
-    grade: string;
+    email: string;
+    grade: string | null;
+    role: string | null;
 }
 
 export interface Task {

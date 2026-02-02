@@ -30,7 +30,7 @@ class UserController extends Controller
             ];
         });
 
-        return Inertia::render('Home', [
+        return Inertia::render('Dashboard', [
             'duties' => $duties
         ]);
     }
@@ -66,14 +66,6 @@ class UserController extends Controller
         return redirect('/users');
     }
 
-
-    public function show(User $user)
-{
-    return Inertia::render('Users/Show', [
-        'user' => $user
-    ]);
-}
-
     public function edit(User $user)
     {
          return Inertia::render('Users/Edit', [
@@ -85,15 +77,19 @@ class UserController extends Controller
     {
         request()->validate([
             'name'=>['required'],
-            'grade'=>['required']
+            'email'=>['required'],
+            'grade'=>['required'],
+            'role'=>['required']
         ]);
 
         $user->update([
             'name' => request('name'),
+            'email' => request('email'),
             'grade' => request('grade'),
+            'role' => request('role'),
         ]);
         
-        return redirect('users/'.$user->id);
+        return redirect('/users');
     }
 
     public function destroy(User $user)

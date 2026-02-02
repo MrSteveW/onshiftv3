@@ -25,7 +25,7 @@ export default function Index({ users }: Props) {
                         href="/users/create"
                         className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                     >
-                        Create
+                        + User
                     </a>
                 </div>
                 {/* Display */}
@@ -45,7 +45,7 @@ export default function Index({ users }: Props) {
                             <div className="text-lg">{user.grade}</div>
                             <div className="text-lg">{user.role}</div>
                             <Link
-                                href={`/users/${user.id}`}
+                                href={`/users/${user.id}/edit`}
                                 className="hover:text-slate-300 hover:underline"
                             >
                                 <UserRoundPen />
