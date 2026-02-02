@@ -16,7 +16,6 @@ export default function Edit({ user }: Props) {
         <AppLayout>
             <Head title="Users" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div>{JSON.stringify(user)}</div>
                 <Form
                     action={`/users/${user.id}`}
                     method="patch"

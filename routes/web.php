@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\DutyController;
+use App\Models\User;
 
 Route::get('/', function () {
      if (Auth::check()) {
@@ -18,8 +19,6 @@ Route::get('/', function () {
 })->name('home');
 
 
-// Route::get('/EXAMPLE', function () {...
-// })->middleware(['verified']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
@@ -32,9 +31,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 
-Route::resource('users', UserController::class)->except(['show']);
-Route::get('users/{user}', function () {
-    return redirect()->route('users.index');
+Route::middleware(['auth', 'can:viewAny,' . User::class])->group(function () {
+    
+    Route::resource('users', UserController::class)->except(['show']);
+    
+    // This is now protected too!
+    Route::get('users/{user}', function () {
+        return redirect()->route('users.index');
+    });
 });
 
 Route::get('/board', [UserController::class, 'board']);

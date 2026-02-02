@@ -7,9 +7,20 @@ use App\Http\Resources\UserResource;
 use Inertia\Inertia;
 use App\Enums\UserRole;
 use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class UserController extends Controller
 {
+    // Authorization
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:viewAny,App\Models\User'),
+        ];
+    }
+
     public function board()
     {
         // Get all users and convert them to duties for the drag-and-drop board
@@ -50,9 +61,9 @@ class UserController extends Controller
         ]);;
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        request()->validate([
+        $validated = $request->validate([
             'name'=>['required', 'string', 'max:255'],
             'email'=>['required', 'email', 'unique:users'],
             'password'=>['required'],
@@ -60,13 +71,7 @@ class UserController extends Controller
             'role'=>['required', Rule::enum(UserRole::class)],
         ]);
 
-        User::create([
-            'name' => request('name'),
-            'email' => request('email'),
-            'password' => request('password'),
-            'grade' => request('grade'),
-            'role' => request('role'),
-        ]);
+        User::create($validated);
         return redirect('/users');
     }
 
@@ -90,12 +95,7 @@ class UserController extends Controller
             'role'=>['required', Rule::enum(UserRole::class)],
         ]);
 
-        $user->update([
-            'name' => request('name'),
-            'email' => request('email'),
-            'grade' => request('grade'),
-            'role' => request('role'),
-        ]);
+        $user->update(request()->all());
         
         return redirect('/users');
     }
