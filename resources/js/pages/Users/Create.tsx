@@ -1,83 +1,104 @@
-import { useForm, Head } from '@inertiajs/react';
-import { FormField } from '@/components/FormField';
+import { Form, Head } from '@inertiajs/react';
+import InputError from '@/components/auth/input-error';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Spinner } from '@/components/ui/spinner';
 import AppLayout from '@/layouts/app-layout';
 
 export default function Create() {
-    const { data, setData, post, errors, processing } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        grade: '',
-        role: '',
-    });
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        post('/users');
-    };
-
     return (
         <AppLayout>
             <Head title="Users" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <form onSubmit={handleSubmit}>
-                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        <FormField
-                            label="Name"
-                            id="name"
-                            value={data.name}
-                            error={errors.name}
-                            onChange={(e) => setData('name', e.target.value)}
-                            required
-                        />
-                        <FormField
-                            label="Email"
-                            id="email"
-                            value={data.email}
-                            error={errors.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            required
-                        />
+                {/* WAYFINDER?  {...store.form()} */}
+                <Form
+                    action="/users"
+                    method="post"
+                    resetOnSuccess={['password']}
+                    className="flex flex-col gap-6"
+                >
+                    {({ processing, errors }) => (
+                        <>
+                            <div className="grid gap-6">
+                                <div className="grid gap-2">
+                                    <Label htmlFor="name">Name</Label>
+                                    <Input
+                                        id="name"
+                                        type="text"
+                                        name="name"
+                                        required
+                                        autoFocus
+                                        autoComplete="off"
+                                    />
+                                    <InputError message={errors.name} />
+                                </div>
 
-                        <FormField
-                            label="Password"
-                            id="password"
-                            type="password"
-                            value={data.password}
-                            error={errors.password}
-                            onChange={(e) =>
-                                setData('password', e.target.value)
-                            }
-                            required
-                        />
+                                <div className="grid gap-2">
+                                    <Label htmlFor="email">Email</Label>
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        name="email"
+                                        required
+                                        autoComplete="new-email"
+                                    />
+                                    <InputError message={errors.email} />
+                                </div>
 
-                        <FormField
-                            label="Grade"
-                            id="grade"
-                            value={data.grade}
-                            error={errors.grade}
-                            onChange={(e) => setData('grade', e.target.value)}
-                            required
-                        />
-                        <FormField
-                            label="Role"
-                            id="role"
-                            value={data.role}
-                            error={errors.role}
-                            onChange={(e) => setData('role', e.target.value)}
-                            required
-                        />
-                    </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="grade">Grade</Label>
+                                    <Input
+                                        id="grade"
+                                        type="text"
+                                        name="grade"
+                                        required
+                                        autoComplete="off"
+                                    />
+                                    <InputError message={errors.grade} />
+                                </div>
 
-                    <div className="mt-6 flex gap-x-6">
-                        <button
-                            disabled={processing}
-                            className="rounded bg-indigo-500 p-2 text-white"
-                        >
-                            {processing ? 'Saving...' : 'Save'}
-                        </button>
-                    </div>
-                </form>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="role">Role</Label>
+                                    <Input
+                                        id="role"
+                                        type="text"
+                                        name="role"
+                                        required
+                                        autoComplete="off"
+                                    />
+                                    <InputError message={errors.role} />
+                                </div>
+
+                                <div className="grid gap-2">
+                                    <div className="flex items-center">
+                                        <Label htmlFor="password">
+                                            Password
+                                        </Label>
+                                    </div>
+                                    <Input
+                                        id="password"
+                                        type="password"
+                                        name="password"
+                                        required
+                                        autoComplete="new-password"
+                                    />
+                                    <InputError message={errors.password} />
+                                </div>
+
+                                <Button
+                                    type="submit"
+                                    className="mt-4 w-full"
+                                    disabled={processing}
+                                    data-test="create-user-button"
+                                >
+                                    {processing && <Spinner />}
+                                    Add user
+                                </Button>
+                            </div>
+                        </>
+                    )}
+                </Form>
             </div>
         </AppLayout>
     );
