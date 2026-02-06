@@ -19,10 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->string('grade')->nullable();
             $table->string('role')->default(UserRole::Viewer->value);
-            $table->date('date_started')->nullable();
-            $table->date('date_ended')->nullable();
             $table->softDeletes();
         });
 

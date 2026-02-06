@@ -105,6 +105,19 @@ export default function Create({ roles }: CreateProps) {
                                 </div>
 
                                 <div className="grid gap-2">
+                                    <Label htmlFor="training">Training</Label>
+                                    <Input
+                                        id="training"
+                                        type="text"
+                                        name="training"
+                                        required
+                                        autoFocus
+                                        autoComplete="off"
+                                    />
+                                    <InputError message={errors.training} />
+                                </div>
+
+                                <div className="grid gap-2">
                                     <div className="flex items-center">
                                         <Label htmlFor="password">
                                             Password

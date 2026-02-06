@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Enums\UserRole;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -22,10 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'grade',
         'role',
-        'date_started',
-        'date_ended',
     ];
 
     public $timestamps = false;
@@ -42,6 +40,7 @@ class User extends Authenticatable
         'two_factor_secret',
         'two_factor_recovery_codes',
         'remember_token',
+        'employee',
     ];
 
     /**
@@ -57,5 +56,10 @@ class User extends Authenticatable
             'two_factor_confirmed_at' => 'datetime',
             'role' => UserRole::class,
         ];
+    }
+
+    public function employee(): HasOne
+    {
+        return $this->hasOne(Employee::class);
     }
 }

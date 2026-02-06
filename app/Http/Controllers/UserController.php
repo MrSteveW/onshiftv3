@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Employee;
 use App\Http\Resources\UserResource;
 use Inertia\Inertia;
 use App\Enums\UserRole;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -67,12 +68,26 @@ class UserController extends Controller
             'name'=>['required', 'string', 'max:255'],
             'email'=>['required', 'email', 'unique:users'],
             'password'=>['required'],
-            'grade'=>['required'],
             'role'=>['required', Rule::enum(UserRole::class)],
+            'grade'=>['required'],
+            'training'=>['nullable', 'string'],
         ]);
 
-        User::create($validated);
-        return redirect('/users');
+        DB::transaction(function () use ($validated) {
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'role' => $validated['role'],
+                'password' => $validated['password'],
+            ]);
+
+            $user->employee()->create([
+                'grade' => $validated['grade'],
+                'training' => $validated['training'],
+            ]);
+        });
+        
+        return redirect('/users')->with('message', 'User created successfully.');
     }
 
     public function edit(User $user)

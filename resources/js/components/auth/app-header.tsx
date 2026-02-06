@@ -43,16 +43,7 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
-    {
-        title: 'Users',
-        href: '/users',
-        icon: UserPen,
-    },
-    {
-        title: 'Tasks',
-        href: '/tasks',
-        icon: Clipboard,
-    },
+
     {
         title: 'Duties',
         href: '/duties',
@@ -65,7 +56,18 @@ const mainNavItems: NavItem[] = [
     },
 ];
 
-const rightNavItems: NavItem[] = [];
+const adminNavItems: NavItem[] = [
+    {
+        title: 'Users',
+        href: '/users',
+        icon: UserPen,
+    },
+    {
+        title: 'Tasks',
+        href: '/tasks',
+        icon: Clipboard,
+    },
+];
 
 const activeItemStyles =
     'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
@@ -119,7 +121,7 @@ export function AppHeader() {
                                         </div>
 
                                         <div className="flex flex-col space-y-4">
-                                            {rightNavItems.map((item) => (
+                                            {adminNavItems.map((item) => (
                                                 <a
                                                     key={item.title}
                                                     href={toUrl(item.href)}
@@ -179,6 +181,38 @@ export function AppHeader() {
                                     </NavigationMenuItem>
                                 ))}
                             </NavigationMenuList>
+
+                            {/* Admin only */}
+                            {auth.user.role === 'Admin' && (
+                                <NavigationMenuList className="flex h-full items-stretch space-x-2">
+                                    {adminNavItems.map((item, index) => (
+                                        <NavigationMenuItem
+                                            key={index}
+                                            className="relative flex h-full items-center"
+                                        >
+                                            <Link
+                                                href={item.href}
+                                                className={cn(
+                                                    navigationMenuTriggerStyle(),
+                                                    whenCurrentUrl(
+                                                        item.href,
+                                                        activeItemStyles,
+                                                    ),
+                                                    'h-9 cursor-pointer px-3',
+                                                )}
+                                            >
+                                                {item.icon && (
+                                                    <item.icon className="mr-2 h-4 w-4" />
+                                                )}
+                                                {item.title}
+                                            </Link>
+                                            {isCurrentUrl(item.href) && (
+                                                <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>
+                                            )}
+                                        </NavigationMenuItem>
+                                    ))}
+                                </NavigationMenuList>
+                            )}
                         </NavigationMenu>
                     </div>
 
