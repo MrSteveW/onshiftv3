@@ -1,7 +1,5 @@
 import { Transition } from '@headlessui/react';
 import { Form, Head, Link, usePage } from '@inertiajs/react';
-import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
-import DeleteUser from '@/components/auth/delete-user';
 import Heading from '@/components/auth/heading';
 import InputError from '@/components/auth/input-error';
 import { Button } from '@/components/ui/button';
@@ -9,16 +7,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
-import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
-import type { BreadcrumbItem, SharedData } from '@/types';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Profile settings',
-        href: edit().url,
-    },
-];
+import type { SharedData } from '@/types/index';
+import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
+import DeleteUser from '@/components/auth/delete-user';
 
 export default function Profile({
     mustVerifyEmail,
@@ -30,7 +22,7 @@ export default function Profile({
     const { auth } = usePage<SharedData>().props;
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <AppLayout>
             <Head title="Profile settings" />
 
             <h1 className="sr-only">Profile Settings</h1>

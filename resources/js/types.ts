@@ -13,12 +13,16 @@ export type CreateDutyProps = {
     date: Date;
 };
 
+export interface EmployeeData {
+    grade: string | null;
+    training: string | null;
+}
+
 export interface User {
-    id: number;
     name: string;
     email: string;
-    grade: string | null;
     role: string | null;
+    employee?: EmployeeData | null;
 }
 
 export interface Task {

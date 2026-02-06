@@ -92,9 +92,10 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        $user->load('employee');
          return Inertia::render('Users/Edit', [
-         'user' => new UserResource($user),
-          'roles' => array_column(UserRole::cases(), 'value'),
+            'user' => new UserResource($user),
+            'roles' => array_column(UserRole::cases(), 'value'),
         ]);
     }
 
