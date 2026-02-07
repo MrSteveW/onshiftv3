@@ -44,7 +44,7 @@ class TaskController extends Controller
         $task->update([
             'name' => request('name')
         ]);
-        return redirect('tasks/'.$task->id);
+        return redirect('tasks/');
     }
 
     public function destroy(Task $task)

@@ -2,17 +2,10 @@ import { Link } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
 import { UserRoundPen } from 'lucide-react';
 import AppLayout from '@/layouts/app-layout';
-
-interface User {
-    id: number;
-    name: string;
-    email: string;
-    grade: string;
-    role: string;
-}
+import type { UserType } from '@/types';
 
 interface Props {
-    users: User[];
+    users: UserType[];
 }
 
 export default function Index({ users }: Props) {
@@ -21,12 +14,12 @@ export default function Index({ users }: Props) {
             <Head title="Users" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="my-3">
-                    <a
+                    <Link
                         href="/users/create"
-                        className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                        className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                     >
                         + User
-                    </a>
+                    </Link>
                 </div>
                 {/* Display */}
                 <div className="w-1/2">
@@ -42,7 +35,9 @@ export default function Index({ users }: Props) {
                             className="grid grid-cols-[2fr_2fr_2fr_1fr] items-center py-1.5 transition-colors hover:bg-slate-50"
                         >
                             <div className="text-lg">{user.name} </div>
-                            <div className="text-lg">{user.grade}</div>
+                            <div className="text-lg">
+                                {user.employee?.grade_name}
+                            </div>
                             <div className="text-lg">{user.role}</div>
                             <Link
                                 href={`/users/${user.id}/edit`}

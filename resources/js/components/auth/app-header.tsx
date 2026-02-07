@@ -3,6 +3,7 @@ import {
     LayoutGrid,
     Menu,
     UserPen,
+    UserStar,
     Clipboard,
     CalendarDays,
     CalendarPlus2,
@@ -66,6 +67,11 @@ const adminNavItems: NavItem[] = [
         title: 'Tasks',
         href: '/tasks',
         icon: Clipboard,
+    },
+    {
+        title: 'Grades',
+        href: '/grades',
+        icon: UserStar,
     },
 ];
 

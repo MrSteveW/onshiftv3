@@ -11,9 +11,16 @@ class EmployeeSeeder extends Seeder
     {
         Employee::create([
             'user_id' => 1,
-            'grade' => 'Senior',
+            'grade_id' => 4,
             'date_started' => now()->format('Y-m-d'),
             'training' => 'JavaScript, PHP',
+            ]);
+
+             Employee::create([
+            'user_id' => 2,
+            'grade_id' => 3,
+            'date_started' => now()->format('Y-m-d'),
+            'training' => 'Pipette training',
             ]);
        
     }

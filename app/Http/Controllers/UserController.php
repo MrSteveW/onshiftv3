@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Grade;
 use App\Models\Employee;
 use App\Http\Resources\UserResource;
 use Inertia\Inertia;
@@ -51,7 +52,7 @@ class UserController extends Controller
     public function index()
     {
          return Inertia::render('Users/Index', [
-         'users' => UserResource::collection(User::all())
+         'users' => UserResource::collection(User::with('employee.grade')->get())
         ]);
     }
 
@@ -59,6 +60,7 @@ class UserController extends Controller
     {
         return Inertia::render('Users/Create', [
         'roles' => array_column(UserRole::cases(), 'value'),
+        'grades' => Grade::select('id', 'name')->get(),
         ]);;
     }
 
@@ -69,7 +71,7 @@ class UserController extends Controller
             'email'=>['required', 'email', 'unique:users'],
             'password'=>['required'],
             'role'=>['required', Rule::enum(UserRole::class)],
-            'grade'=>['required'],
+            'grade_id'=>['required'],
             'training'=>['nullable', 'string'],
         ]);
 
@@ -82,7 +84,7 @@ class UserController extends Controller
             ]);
 
             $user->employee()->create([
-                'grade' => $validated['grade'],
+                'grade_id' => $validated['grade_id'],
                 'training' => $validated['training'],
             ]);
         });
@@ -90,14 +92,19 @@ class UserController extends Controller
         return redirect('/users')->with('message', 'User created successfully.');
     }
 
+
+
     public function edit(User $user)
     {
-        $user->load('employee');
+        $user->load('employee.grade');
          return Inertia::render('Users/Edit', [
             'user' => new UserResource($user),
             'roles' => array_column(UserRole::cases(), 'value'),
+            'grades' => Grade::select('id', 'name')->get(),
         ]);
     }
+
+
 
     public function update(User $user, Request $request)
     {
@@ -107,7 +114,7 @@ class UserController extends Controller
                 'required',
                 'email', 
                 Rule::unique('users')->ignore($user->id)],
-            'grade'=>['required'],
+            'grade_id'=>['required'],
             'role'=>['required', Rule::enum(UserRole::class)],
             'training'=>['nullable', 'string'],
         ]);
@@ -122,7 +129,7 @@ class UserController extends Controller
             $user->employee()->updateOrCreate(
             ['user_id' => $user->id],     
             [
-                'grade' => $validated['grade'],
+                'grade_id' => $validated['grade_id'],
                 'training' => $validated['training'],
             ]);
         });

@@ -6,15 +6,12 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('grade')->nullable();
+            $table->foreignId('grade_id')->nullable();
             $table->date('date_started')->nullable();
             $table->date('date_ended')->nullable();
             $table->string('training')->nullable();
@@ -22,9 +19,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('employees');

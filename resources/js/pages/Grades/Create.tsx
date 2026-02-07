@@ -1,13 +1,13 @@
 import { Head } from '@inertiajs/react';
-import TaskForm from '@/components/TaskForm';
+import GradeForm from '@/components/GradeForm';
 import AppLayout from '@/layouts/app-layout';
 
 export default function Create() {
     return (
         <AppLayout>
-            <Head title="New Task" />
+            <Head title="New Grade" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <TaskForm action="/tasks" method="post" />
+                <GradeForm action="/grades" method="post" />
             </div>
         </AppLayout>
     );

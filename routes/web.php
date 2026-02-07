@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\GradeController;
 use App\Http\Controllers\DutyController;
 use App\Models\User;
 
@@ -25,20 +26,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     return Inertia::render('dashboard');
     })->name('dashboard');
 
-    Route::resource('tasks', TaskController::class);
+    
     Route::resource('duties', DutyController::class);
 
 });
 
-
+// Admin only auth
 Route::middleware(['auth', 'can:viewAny,' . User::class])->group(function () {
     
     Route::resource('users', UserController::class)->except(['show']);
-    
-    // This is now protected too!
     Route::get('users/{user}', function () {
         return redirect()->route('users.index');
     });
+
+    Route::resource('tasks', TaskController::class);
+    Route::resource('grades', GradeController::class);
+
 });
 
 Route::get('/board', [UserController::class, 'board']);

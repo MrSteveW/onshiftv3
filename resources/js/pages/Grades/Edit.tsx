@@ -1,21 +1,21 @@
 import { Head } from '@inertiajs/react';
-import TaskForm from '@/components/TaskForm';
+import GradeForm from '@/components/GradeForm';
 import AppLayout from '@/layouts/app-layout';
-import type { Task } from '@/types';
+import type { Grade } from '@/types';
 
 interface EditProps {
-    task: Task;
+    grade: Grade;
 }
 
-export default function Edit({ task }: EditProps) {
+export default function Edit({ grade }: EditProps) {
     return (
         <AppLayout>
-            <Head title="Task edit" />
+            <Head title="Grade edit" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <TaskForm
-                    action={`/tasks/${task.id}`}
+                <GradeForm
+                    action={`/grades/${grade.id}`}
                     method="patch"
-                    initialData={task}
+                    initialData={grade}
                 />
             </div>
         </AppLayout>

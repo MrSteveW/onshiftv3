@@ -1,4 +1,4 @@
-export interface User {
+export interface UserType {
     id: number;
     name: string;
     email: string;
@@ -8,9 +8,19 @@ export interface User {
     two_factor_enabled?: boolean;
     created_at: string;
     updated_at: string;
-    employee?: EmployeeData | null;
-    // [key: string]: unknown;
+    employee?: EmployeeType | null;
 }
+
+export interface EmployeeType {
+    grade_id: number | null;
+    grade_name: string | null;
+    training: string | null;
+}
+
+export type GradePropsType = {
+    id: number;
+    name: string;
+};
 
 export type Duty = {
     id: number;
@@ -22,17 +32,17 @@ export type Duty = {
 };
 
 export type CreateDutyProps = {
-    users?: User[];
+    users?: UserType[];
     tasks?: Task[];
     date: Date;
 };
 
-export interface EmployeeData {
-    grade: string | null;
-    training: string | null;
+export interface Task {
+    id: number;
+    name: string;
 }
 
-export interface Task {
+export interface Grade {
     id: number;
     name: string;
 }

@@ -2,27 +2,23 @@ import { Link } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
 import { UserRoundPen } from 'lucide-react';
 import AppLayout from '@/layouts/app-layout';
+import type { Grade } from '@/types';
 
-interface Task {
-    id: number;
-    name: string;
+interface IndexProps {
+    grades: Grade[];
 }
 
-interface Props {
-    tasks: Task[];
-}
-
-export default function Index({ tasks }: Props) {
+export default function Index({ grades }: IndexProps) {
     return (
         <AppLayout>
-            <Head title="Tasks" />
+            <Head title="Grades" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="my-3">
                     <Link
-                        href="/tasks/create"
+                        href="/grades/create"
                         className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                     >
-                        + Task
+                        + Grade
                     </Link>
                 </div>
                 {/* Display */}
@@ -31,14 +27,14 @@ export default function Index({ tasks }: Props) {
                         <div>Name</div>
                         <div></div>
                     </div>
-                    {tasks.map((task) => (
+                    {grades.map((grade) => (
                         <div
-                            key={task.id}
+                            key={grade.id}
                             className="grid grid-cols-[2fr_1fr] items-center py-1.5 transition-colors hover:bg-slate-50"
                         >
-                            <div className="text-lg">{task.name} </div>
+                            <div className="text-lg">{grade.name} </div>
                             <Link
-                                href={`/tasks/${task.id}/edit`}
+                                href={`/grades/${grade.id}/edit`}
                                 className="hover:text-slate-300 hover:underline"
                             >
                                 <UserRoundPen />
