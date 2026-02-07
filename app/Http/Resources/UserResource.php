@@ -18,7 +18,6 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'grade' => $this->grade,
             'role' => $this->role,
             // Only when admin is viewing
             'employee' => new EmployeeResource($this->whenLoaded('employee')),

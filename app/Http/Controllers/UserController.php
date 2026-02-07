@@ -99,9 +99,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(User $user)
+    public function update(User $user, Request $request)
     {
-        request()->validate([
+        $validated = $request->validate([
             'name'=>['required', 'string', 'max:255'],
             'email'=>[
                 'required',
@@ -109,11 +109,26 @@ class UserController extends Controller
                 Rule::unique('users')->ignore($user->id)],
             'grade'=>['required'],
             'role'=>['required', Rule::enum(UserRole::class)],
+            'training'=>['nullable', 'string'],
         ]);
 
-        $user->update(request()->all());
+        DB::transaction(function () use ($validated, $user) {
+            $user->update([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'role' => $validated['role'],
+            ]);
+
+            $user->employee()->updateOrCreate(
+            ['user_id' => $user->id],     
+            [
+                'grade' => $validated['grade'],
+                'training' => $validated['training'],
+            ]);
+        });
         
-        return redirect('/users');
+        
+        return redirect('/users')->with('message', 'User updated successfully.');;
     }
 
     public function destroy(User $user)

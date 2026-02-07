@@ -1,3 +1,17 @@
+export interface User {
+    id: number;
+    name: string;
+    email: string;
+    role: string | null;
+    avatar?: string;
+    email_verified_at: string | null;
+    two_factor_enabled?: boolean;
+    created_at: string;
+    updated_at: string;
+    employee?: EmployeeData | null;
+    // [key: string]: unknown;
+}
+
 export type Duty = {
     id: number;
     user_id: number;
@@ -16,13 +30,6 @@ export type CreateDutyProps = {
 export interface EmployeeData {
     grade: string | null;
     training: string | null;
-}
-
-export interface User {
-    name: string;
-    email: string;
-    role: string | null;
-    employee?: EmployeeData | null;
 }
 
 export interface Task {
