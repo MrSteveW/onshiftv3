@@ -1,5 +1,5 @@
 import { Head } from '@inertiajs/react';
-import UserForm from '@/components/user/UserForm';
+import UserForm from '@/components/UserForm';
 import AppLayout from '@/layouts/app-layout';
 import type { GradePropsType } from '@/types';
 

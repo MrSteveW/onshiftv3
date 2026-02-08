@@ -49,12 +49,15 @@ class UserController extends Controller
             'duties' => $duties
         ]);
     }
-    public function index()
-    {
-         return Inertia::render('Users/Index', [
-         'users' => UserResource::collection(User::with('employee.grade')->get())
-        ]);
-    }
+  public function index()
+{
+    $users = User::with('employee.grade')->get();
+
+    return Inertia::render('Users/Index', [
+        'users' => UserResource::collection($users),
+        'totalCount' => $users->count(), // This counts the in-memory collection, no SQL query fired
+    ]);
+}
 
     public function create()
     {

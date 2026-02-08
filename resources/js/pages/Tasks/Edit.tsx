@@ -1,4 +1,5 @@
 import { Head } from '@inertiajs/react';
+import DeleteAction from '@/components/DeleteAction';
 import TaskForm from '@/components/TaskForm';
 import AppLayout from '@/layouts/app-layout';
 import type { Task } from '@/types';
@@ -17,6 +18,10 @@ export default function Edit({ task }: EditProps) {
                     method="patch"
                     initialData={task}
                 />
+                <div className="rounded-lg bg-red-300 p-2">
+                    <div className="my-2">Danger zone</div>
+                    <DeleteAction url={`/tasks/${task.id}`} name={task.name} />
+                </div>
             </div>
         </AppLayout>
     );

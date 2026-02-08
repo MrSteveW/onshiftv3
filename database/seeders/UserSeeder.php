@@ -142,5 +142,12 @@ class UserSeeder extends Seeder
          'password' => 'password',
          'role' => UserRole::Viewer,
          ]);
+
+         User::create([
+         'name' => 'Tabitha',
+         'email' => 'tabitha@example.com',
+         'password' => 'password',
+         'role' => UserRole::Viewer,
+         ]);
     }
 }

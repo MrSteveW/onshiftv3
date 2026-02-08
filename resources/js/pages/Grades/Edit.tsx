@@ -1,4 +1,5 @@
 import { Head } from '@inertiajs/react';
+import DeleteAction from '@/components/DeleteAction';
 import GradeForm from '@/components/GradeForm';
 import AppLayout from '@/layouts/app-layout';
 import type { Grade } from '@/types';
@@ -17,6 +18,13 @@ export default function Edit({ grade }: EditProps) {
                     method="patch"
                     initialData={grade}
                 />
+                <div className="rounded-lg bg-red-300 p-2">
+                    <div className="my-2">Danger zone</div>
+                    <DeleteAction
+                        url={`/grades/${grade.id}`}
+                        name={grade.name}
+                    />
+                </div>
             </div>
         </AppLayout>
     );

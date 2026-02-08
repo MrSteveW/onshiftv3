@@ -56,7 +56,7 @@ export default function GradeForm({
                                         variant="outline"
                                         disabled={processing}
                                     >
-                                        <Link href="/tasks">Cancel</Link>
+                                        <Link href="/grades">Cancel</Link>
                                     </Button>
                                 </div>
                             </div>
