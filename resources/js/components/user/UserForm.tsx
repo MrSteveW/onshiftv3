@@ -175,7 +175,7 @@ export default function UserForm({
                     </Button>
 
                     <Button variant="outline">
-                        <Link href="/tasks">Cancel</Link>
+                        <Link href="/users">Cancel</Link>
                     </Button>
                 </div>
             </div>

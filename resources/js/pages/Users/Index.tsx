@@ -22,8 +22,8 @@ export default function Index({ users }: Props) {
                     </Link>
                 </div>
                 {/* Display */}
-                <div className="w-1/2">
-                    <div className="grid grid-cols-[2fr_2fr_2fr_1fr] items-center border-b pb-2 font-bold">
+                <div className="relative h-[calc(100vh-160px)] w-1/2 overflow-y-auto">
+                    <div className="sticky top-0 z-10 grid grid-cols-[2fr_2fr_2fr_1fr] border-b bg-white pb-2 font-bold">
                         <div>Name</div>
                         <div>Grade</div>
                         <div>Role</div>
@@ -32,9 +32,9 @@ export default function Index({ users }: Props) {
                     {users.map((user) => (
                         <div
                             key={user.id}
-                            className="grid grid-cols-[2fr_2fr_2fr_1fr] items-center py-1.5 transition-colors hover:bg-slate-50"
+                            className="grid grid-cols-[2fr_2fr_2fr_1fr] items-center py-1.5 transition-colors hover:bg-slate-100"
                         >
-                            <div className="text-lg">{user.name} </div>
+                            <div className="text-lg">{user.name}</div>
                             <div className="text-lg">
                                 {user.employee?.grade_name}
                             </div>

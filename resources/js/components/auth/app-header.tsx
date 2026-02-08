@@ -85,7 +85,7 @@ export function AppHeader() {
     const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
     return (
         <>
-            <div className="border-b border-sidebar-border/80">
+            <div className="fixed top-0 z-50 w-full border-b border-sidebar-border/80 bg-background">
                 <div className="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
                     {/* Mobile Menu */}
                     <div className="lg:hidden">
@@ -159,7 +159,7 @@ export function AppHeader() {
                     {/* Desktop Navigation */}
                     <div className="ml-6 hidden h-full items-center space-x-6 lg:flex">
                         <NavigationMenu className="flex h-full items-stretch">
-                            <NavigationMenuList className="flex h-full items-stretch space-x-2">
+                            <NavigationMenuList className="mr-2 flex h-full items-stretch space-x-2">
                                 {mainNavItems.map((item, index) => (
                                     <NavigationMenuItem
                                         key={index}
@@ -247,6 +247,8 @@ export function AppHeader() {
                     </div>
                 </div>
             </div>
+            {/* Spacer to push content below fixed header */}
+            <div className="h-16"></div>
         </>
     );
 }

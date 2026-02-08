@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
-import { UserRoundPen } from 'lucide-react';
+import { ClipboardPen } from 'lucide-react';
 import AppLayout from '@/layouts/app-layout';
 
 interface Task {
@@ -26,8 +26,8 @@ export default function Index({ tasks }: Props) {
                     </Link>
                 </div>
                 {/* Display */}
-                <div className="w-1/3">
-                    <div className="grid grid-cols-[2fr_1fr] items-center border-b pb-2 font-bold">
+                <div className="relative h-[calc(100vh-160px)] w-1/2 overflow-y-auto">
+                    <div className="sticky top-0 z-10 grid grid-cols-[2fr_1fr] border-b bg-white pb-2 font-bold">
                         <div>Name</div>
                         <div></div>
                     </div>
@@ -41,7 +41,7 @@ export default function Index({ tasks }: Props) {
                                 href={`/tasks/${task.id}/edit`}
                                 className="hover:text-slate-300 hover:underline"
                             >
-                                <UserRoundPen />
+                                <ClipboardPen />
                             </Link>
                         </div>
                     ))}
