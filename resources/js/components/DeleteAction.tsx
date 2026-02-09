@@ -11,13 +11,12 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 
-export default function DeleteUserAction({
-    url,
-    name,
-}: {
+type DeleteActionProps = {
     url: string;
     name: string;
-}) {
+};
+
+export default function DeleteAction({ url, name }: DeleteActionProps) {
     const handleDelete = () => {
         router.delete(url);
     };

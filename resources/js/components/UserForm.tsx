@@ -11,14 +11,14 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import type { UserType, EmployeeType, GradePropsType } from '@/types';
+import type { User, Employee, Grade } from '@/types';
 
 type UserFormProps = {
     action: string;
-    grades: GradePropsType[];
+    grades: Grade[];
     method: 'post' | 'patch';
     roles: string[];
-    initialData?: UserType;
+    initialData?: User;
 };
 
 export default function UserForm({
@@ -101,7 +101,7 @@ export default function UserForm({
                 </div>
 
                 {/* Grade */}
-                <div className="flex flex-col gap-2">
+                <div className="flex w-30 flex-col gap-2">
                     <Label>Grade</Label>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -144,8 +144,7 @@ export default function UserForm({
                         name="training"
                         autoComplete="off"
                         defaultValue={
-                            (initialData?.employee as EmployeeType)?.training ??
-                            ''
+                            (initialData?.employee as Employee)?.training ?? ''
                         }
                     />
                     <InputError message={errors.training} />

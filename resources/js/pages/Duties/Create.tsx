@@ -2,11 +2,16 @@ import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 import DatePicker from 'react-date-picker';
 import 'react-calendar/dist/Calendar.css';
-import AssigningOneDuty from '@/components/AssigningOneDuty';
+import AssigningDuties from '@/components/AssigningDuties';
 import AppLayout from '@/layouts/app-layout';
-import type { CreateDutyProps } from 'types';
+import type { User, Task } from '@/types';
 
 import 'react-date-picker/dist/DatePicker.css';
+
+interface CreateDutyProps {
+    users?: User[];
+    tasks?: Task[];
+}
 
 export default function Create({ users, tasks }: CreateDutyProps) {
     const [date, setDate] = useState<Date>(new Date());
@@ -19,8 +24,11 @@ export default function Create({ users, tasks }: CreateDutyProps) {
         <AppLayout>
             <Head title="Duties" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <DatePicker onChange={setDate} value={date} />
-                <AssigningOneDuty
+                <div className="">
+                    <DatePicker onChange={setDate} value={date} />
+                </div>
+
+                <AssigningDuties
                     date={formattedDate}
                     users={users}
                     tasks={tasks}

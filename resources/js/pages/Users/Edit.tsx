@@ -7,7 +7,7 @@ import type { UserType, GradePropsType } from '@/types';
 interface Props {
     user: UserType;
     roles: string[];
-    grades: GradePropsType;
+    grades: GradePropsType[];
 }
 
 export default function Edit({ user, roles, grades }: Props) {

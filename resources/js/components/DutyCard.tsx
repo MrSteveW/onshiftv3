@@ -1,11 +1,13 @@
 import { useDraggable } from '@dnd-kit/core';
-import type { Duty } from 'types';
+import type { Duty } from '@/types';
 
 type DutyCardProps = {
     duty: Duty;
+    getUserDetails: (userId: number) => { name: string; grade: string };
 };
 
-export function DutyCard({ duty }: DutyCardProps) {
+export function DutyCard({ duty, getUserDetails }: DutyCardProps) {
+    const userDetails = getUserDetails(duty.user_id);
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: duty.id,
     });
@@ -21,11 +23,13 @@ export function DutyCard({ duty }: DutyCardProps) {
             ref={setNodeRef}
             {...listeners}
             {...attributes}
-            className="cursor-grab rounded-lg bg-neutral-700 p-4 shadow-sm hover:shadow-md"
+            className="cursor-grab rounded-lg bg-white px-2 shadow-sm hover:shadow-md"
             style={style}
         >
-            <h3 className="font-medium text-neutral-100">{duty.user.name}</h3>
-            <p className="mt-2 text-sm text-neutral-400">{duty.user.grade}</p>
+            <div className="flex">
+                <div>{userDetails.name}</div>
+                <div>{userDetails.grade}</div>
+            </div>
         </div>
     );
 }

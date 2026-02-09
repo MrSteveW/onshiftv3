@@ -23,39 +23,41 @@ class UserController extends Controller
         ];
     }
 
-    public function board()
-    {
+    // public function board()
+    // {
         // Get all users and convert them to duties for the drag-and-drop board
-        $users = User::all();
+    //     $users = User::all();
         
-        $duties = $users->map(function ($user) {
-            return [
-                'id' => $user->id,
-                'user_id' => $user->id,
-                'task_id' => null, // No task assigned initially
-                'shift_type' => null,
-                'hours' => null,
-                'analyser_id' => null, // All start as unassigned
-                'user' => [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'grade' => $user->grade,
-                ],
-                'task' => null,
-            ];
-        });
+    //     $duties = $users->map(function ($user) {
+    //         return [
+    //             'id' => $user->id,
+    //             'user_id' => $user->id,
+    //             'task_id' => null, // No task assigned initially
+    //             'shift_type' => null,
+    //             'hours' => null,
+    //             'analyser_id' => null, // All start as unassigned
+    //             'user' => [
+    //                 'id' => $user->id,
+    //                 'name' => $user->name,
+    //                 'grade' => $user->grade,
+    //             ],
+    //             'task' => null,
+    //         ];
+    //     });
 
-        return Inertia::render('Dashboard', [
-            'duties' => $duties
-        ]);
-    }
+    //     return Inertia::render('Dashboard', [
+    //         'duties' => $duties
+    //     ]);
+    // }
+
+
   public function index()
 {
     $users = User::with('employee.grade')->get();
 
     return Inertia::render('Users/Index', [
         'users' => UserResource::collection($users),
-        'totalCount' => $users->count(), // This counts the in-memory collection, no SQL query fired
+        'totalCount' => $users->count(),
     ]);
 }
 

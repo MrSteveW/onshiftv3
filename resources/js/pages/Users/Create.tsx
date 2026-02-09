@@ -1,11 +1,11 @@
 import { Head } from '@inertiajs/react';
 import UserForm from '@/components/UserForm';
 import AppLayout from '@/layouts/app-layout';
-import type { GradePropsType } from '@/types';
+import type { GradeType } from '@/types';
 
 type CreateProps = {
     roles: string[];
-    grades: GradePropsType;
+    grades: GradeType[];
 };
 
 export default function Create({ roles, grades }: CreateProps) {

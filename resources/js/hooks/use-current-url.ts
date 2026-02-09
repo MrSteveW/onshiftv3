@@ -29,17 +29,28 @@ export function useCurrentUrl(): UseCurrentUrlReturn {
     ) => {
         const urlToCompare = currentUrl ?? currentUrlPath;
         const urlString = toUrl(urlToCheck);
+        let targetPath = urlString;
 
-        if (!urlString.startsWith('http')) {
-            return urlString === urlToCompare;
+        if (urlString.startsWith('http')) {
+            try {
+                targetPath = new URL(urlString).pathname;
+            } catch {
+                return false;
+            }
         }
 
-        try {
-            const absoluteUrl = new URL(urlString);
-            return absoluteUrl.pathname === urlToCompare;
-        } catch {
-            return false;
+        if (targetPath === '/') {
+            return urlToCompare === '/';
         }
+
+        const normalizedTarget = targetPath.endsWith('/')
+            ? targetPath
+            : `${targetPath}/`;
+        const normalizedCurrent = urlToCompare.endsWith('/')
+            ? urlToCompare
+            : `${urlToCompare}/`;
+
+        return normalizedCurrent.startsWith(normalizedTarget);
     };
 
     const whenCurrentUrl: WhenCurrentUrlFn = <TIfTrue, TIfFalse = null>(

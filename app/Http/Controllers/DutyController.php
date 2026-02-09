@@ -41,9 +41,14 @@ class DutyController extends Controller
 
     public function create()
     {
-         return Inertia::render('Duties/Create' ,[
-               'users' => UserResource::collection(User::all()),
-               'tasks' => TaskResource::collection(Task::all())
+        $users = User::with('employee.grade')->get();
+        return Inertia::render('Duties/Create', [
+            'users' => $users->map(fn($user) => [
+                'id'    => $user->id,
+                'name'  => $user->name,
+                'grade' => $user->employee->grade->name ?? '',
+            ]),
+            'tasks' => TaskResource::collection(Task::all())
         ]);
     }
 
@@ -54,7 +59,7 @@ class DutyController extends Controller
         'duties' => ['required', 'array'],
         'duties.*.user_id' => ['required', 'integer'],
         'duties.*.task_id' => ['required', 'integer'], 
-        'duties.*.dutydate' => ['required', 'date'],
+        'duties.*.dutydate' => ['required', 'date_format:Y-m-d'],
     ]);
 
     // Create multiple duties at once
