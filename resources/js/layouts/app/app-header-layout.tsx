@@ -1,7 +1,7 @@
 import { AppContent } from '@/components/auth/app-content';
 import { AppHeader } from '@/components/auth/app-header';
 import { AppShell } from '@/components/auth/app-shell';
-import type { AppLayoutProps } from '@/types';
+import type { AppLayoutProps } from '@/types/ui';
 
 export default function AppHeaderLayout({ children }: AppLayoutProps) {
     return (

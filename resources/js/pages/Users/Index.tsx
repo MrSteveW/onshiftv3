@@ -2,10 +2,10 @@ import { Link } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
 import { UserRoundPen } from 'lucide-react';
 import AppLayout from '@/layouts/app-layout';
-import type { UserType } from '@/types';
+import type { User } from '@/types';
 
 interface Props {
-    users: UserType[];
+    users: User[];
     totalCount: number;
 }
 

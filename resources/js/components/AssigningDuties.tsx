@@ -4,16 +4,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AvailableColumn } from '@/components/AvailableColumn';
 import { TaskSlot } from '@/components/TaskSlot';
 import { Button } from '@/components/ui/button';
-import type { Task, Duty } from '@/types';
-
-interface User {
-    id: number;
-    name: string;
-    grade: string;
-}
+import type { Task, Duty, AssignableUser } from '@/types';
 
 interface AssigningDutiesProps {
-    users?: User[];
+    users?: AssignableUser[];
     tasks?: Task[];
     date: string;
 }

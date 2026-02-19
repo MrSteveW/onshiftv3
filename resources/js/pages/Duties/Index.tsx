@@ -4,8 +4,10 @@ import { Head } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-date-picker';
-import AppLayout from '@/layouts/app-layout';
 import { TaskSlot } from '@/components/TaskSlot';
+import AppLayout from '@/layouts/app-layout';
+type ValuePiece = Date | null;
+type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 interface User {
     id: number;
@@ -46,7 +48,7 @@ export default function Index({
     selectedDate,
     errors,
 }: Props) {
-    const [date, setDate] = useState<Date | null>(
+    const [date, setDate] = useState<Value>(
         selectedDate ? new Date(selectedDate) : null,
     );
     const [selectedDuties, setSelectedDuties] = useState<Duty[]>(duties);
@@ -55,16 +57,16 @@ export default function Index({
         setSelectedDuties(duties);
     }, [duties]);
 
-    const formatDateForQuery = (date: Date): string => {
+    const formatDate = (val: Value): string => {
         return date.toISOString().split('T')[0];
     };
 
     // Handle date picker change - immediately trigger Laravel request
-    const handleDateChange = (newDate: Date | null) => {
+    const handleDateChange = (newDate: Value) => {
         setDate(newDate);
 
         if (newDate) {
-            const formattedDate = formatDateForQuery(newDate);
+            const formattedDate = formatDate(newDate);
 
             // Clear duties immediately
             setSelectedDuties([]);

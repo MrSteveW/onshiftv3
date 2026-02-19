@@ -2,12 +2,12 @@ import { Head } from '@inertiajs/react';
 import DeleteAction from '@/components/DeleteAction';
 import UserForm from '@/components/UserForm';
 import AppLayout from '@/layouts/app-layout';
-import type { UserType, GradePropsType } from '@/types';
+import type { User, Grade } from '@/types';
 
 interface Props {
-    user: UserType;
+    user: User;
     roles: string[];
-    grades: GradePropsType[];
+    grades: Grade[];
 }
 
 export default function Edit({ user, roles, grades }: Props) {

@@ -16,11 +16,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('task_id')->constrained('tasks');
             $table->date('dutydate');
-            $table->string('shift_type')->nullable();
-            $table->decimal('hours', 3, 1)->nullable();
+            $table->string('start_time')->nullable();
+            $table->decimal('end_time')->nullable();
             
-            // Prevent duplicate assignments
-            $table->unique(['user_id', 'task_id', 'dutydate']);
         });
     }
 

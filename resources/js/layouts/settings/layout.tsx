@@ -7,7 +7,7 @@ import { useCurrentUrl } from '@/hooks/use-current-url';
 import { cn, toUrl } from '@/lib/utils';
 import { edit as editAppearance } from '@/routes/appearance';
 import { edit as editPassword } from '@/routes/user-password';
-import type { NavItem } from '@/types';
+import type { NavItem } from '@/types/navigation';
 
 const sidebarNavItems: NavItem[] = [
     {
