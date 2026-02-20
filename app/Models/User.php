@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Employee::class);
     }
+
+    public function shiftpattern(): HasOne
+    {
+        return $this->hasOne(ShiftPattern::class);
+    }
 }

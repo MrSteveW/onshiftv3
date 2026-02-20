@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class ShiftPattern extends Model
 {
@@ -17,4 +19,10 @@ class ShiftPattern extends Model
         'end_time' => 'datetime:H:i',
     ];
 }
+
+ public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

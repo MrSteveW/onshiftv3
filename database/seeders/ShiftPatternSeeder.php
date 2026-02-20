@@ -13,7 +13,7 @@ class ShiftPatternSeeder extends Seeder
     {
        ShiftPattern::create([
             'user_id' => 1,
-            'day' => 1,
+            'day_number' => 1,
             'status' => ShiftStatus::OnDuty,
             'start_time' => '08:00',
             'end_time' => '16:00',

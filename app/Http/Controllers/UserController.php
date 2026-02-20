@@ -66,7 +66,7 @@ class UserController extends Controller
         return Inertia::render('Users/Create', [
         'roles' => array_column(UserRole::cases(), 'value'),
         'grades' => Grade::select('id', 'name')->get(),
-        ]);;
+        ]);
     }
 
     public function store(Request $request)

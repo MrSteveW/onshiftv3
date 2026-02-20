@@ -73,6 +73,11 @@ const adminNavItems: NavItem[] = [
         href: '/grades',
         icon: UserStar,
     },
+    {
+        title: 'Shift Patterns',
+        href: '/shiftpatterns',
+        icon: UserStar,
+    },
 ];
 
 const activeItemStyles =

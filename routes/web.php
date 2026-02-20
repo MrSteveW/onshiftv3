@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\DutyController;
+use App\Http\Controllers\ShiftPatternController;
 use App\Models\User;
 
 Route::get('/', function () {
@@ -41,6 +42,7 @@ Route::middleware(['auth', 'can:viewAny,' . User::class])->group(function () {
 
     Route::resource('tasks', TaskController::class);
     Route::resource('grades', GradeController::class);
+    Route::resource('shiftpatterns', ShiftPatternController::class);
 
 });
 
