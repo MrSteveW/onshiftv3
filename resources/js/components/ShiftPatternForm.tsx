@@ -1,7 +1,8 @@
-import { Form, Link, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { useForm, Link } from '@inertiajs/react';
+import { useState, useCallback } from 'react';
 import InputError from '@/components/auth/input-error';
-import TimeSelect from '@/components/TimeSelect';
+import ShiftPatternCard from '@/components/ShiftPatternCard';
+
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -11,7 +12,6 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Label } from '@/components/ui/label';
-import type { TimeOptions } from '@/types';
 
 interface ShiftUser {
     id: number;
@@ -21,45 +21,76 @@ interface ShiftUser {
 interface ShiftPatternProps {
     users: ShiftUser[];
     totalDays: number;
-    action: string;
-    method: 'post' | 'patch';
+    onSubmit: (shiftArray: ShiftDay[]) => void;
     initialData?: ShiftUser[];
 }
 
 export default function ShiftPatternForm({
     users,
     totalDays,
-    action,
-    method,
+    onSubmit,
     initialData,
 }: ShiftPatternProps) {
-    const { timeOptions } = usePage().props as unknown as {
-        timeOptions: TimeOptions;
-    };
-    const { errors } = usePage().props;
-
     const [selectedUser, setSelectedUser] = useState<number>();
 
+    const initialShifts = Array.from({ length: totalDays }, (_, i) => ({
+        user_id: '' as number | '',
+        day: i + 1,
+        shift_type: 'Off',
+        start_time: '',
+        end_time: '',
+    }));
+
+    const [shiftArray, setShiftArray] = useState(initialShifts);
+
+    const { data, setData, post, processing, errors } = useForm({
+        shiftArray: initialShifts,
+    });
+
+    const handleDayChange = useCallback(
+        (dayIndex: number, field: string, value: string) => {
+            setShiftArray((prev) => {
+                const updated = prev.map((d, i) =>
+                    i === dayIndex ? { ...d, [field]: value } : d,
+                );
+                return updated;
+            });
+        },
+        [],
+    );
+
+    const handleUserChange = (v: string) => {
+        const id = parseInt(v, 10);
+        setSelectedUser(id);
+        setShiftArray((prev) =>
+            prev.map((shift) => ({ ...shift, user_id: id })),
+        );
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        onSubmit(shiftArray);
+    };
+
     return (
-        <Form action={action} method={method} className="flex flex-col gap-6">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <div className="grid gap-6">
+                <div className="text-xs">{JSON.stringify(shiftArray)}</div>
                 <div className="flex w-full border bg-gray-50 p-5">
-                    {/* User */}
                     <div className="flex w-30 flex-col gap-2">
                         <Label>Select user</Label>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline">
-                                    {users.find((g) => g.id === selectedUser)
-                                        ?.name || 'Select User'}
+                                    {users.find(
+                                        (user) => user.id === selectedUser,
+                                    )?.name || 'Select User'}
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
                                 <DropdownMenuRadioGroup
                                     value={selectedUser?.toString()}
-                                    onValueChange={(v) =>
-                                        setSelectedUser(parseInt(v, 10))
-                                    }
+                                    onValueChange={handleUserChange}
                                 >
                                     {users.map((user) => (
                                         <DropdownMenuRadioItem
@@ -72,52 +103,46 @@ export default function ShiftPatternForm({
                                 </DropdownMenuRadioGroup>
                             </DropdownMenuContent>
                         </DropdownMenu>
-                        <input
-                            type="hidden"
-                            name="user_id"
-                            value={selectedUser || ''}
-                        />
                         <InputError message={errors.user_id} />
                     </div>
                 </div>
 
-                {/* Start Time */}
-                <div className="flex flex-row gap-2">
-                    <div>
-                        <Label>Start time</Label>
-                        <TimeSelect
-                            name={'start_time'}
-                            defaultValue={'00:00'}
-                            options={timeOptions}
-                        />
-                    </div>
-                    <div>
-                        <Label>End time</Label>
-                        <TimeSelect
-                            name={'end_time'}
-                            defaultValue={'00:00'}
-                            options={timeOptions}
-                        />
-                    </div>
+                <div className="flex flex-col gap-2 border bg-gray-200">
+                    {!selectedUser
+                        ? ''
+                        : shiftArray.map((day, index) => (
+                              <ShiftPatternCard
+                                  key={day.day}
+                                  day={day}
+                                  index={index}
+                                  onChange={handleDayChange}
+                                  errors={{
+                                      shift_type:
+                                          errors[
+                                              `shiftArray.${index}.shift_type`
+                                          ],
+                                      start_time:
+                                          errors[
+                                              `shiftArray.${index}.start_time`
+                                          ],
+                                      end_time:
+                                          errors[
+                                              `shiftArray.${index}.end_time`
+                                          ],
+                                  }}
+                              />
+                          ))}
                 </div>
 
-                <input type="hidden" name={'day_number'} value={1} />
-
                 <div className="m-4 flex flex-row items-center">
-                    <Button
-                        type="submit"
-                        data-test="create-shiftpattern-button"
-                    >
-                        {method === 'post'
-                            ? 'Add Shift pattern'
-                            : 'Edit Shift pattern'}
+                    <Button type="submit" disabled={processing}>
+                        Save
                     </Button>
-
                     <Button variant="outline">
                         <Link href="/shiftpatterns">Cancel</Link>
                     </Button>
                 </div>
             </div>
-        </Form>
+        </form>
     );
 }

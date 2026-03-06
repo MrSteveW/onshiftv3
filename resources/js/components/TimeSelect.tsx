@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 interface Option {
     value: string;
     label: string;
@@ -7,34 +5,40 @@ interface Option {
 
 interface Props {
     name: string;
-    defaultValue?: string | number;
+    value?: string;
+    defaultValue?: string;
     options: {
         hours: Option[];
         minutes: Option[];
     };
+    onChange?: (value: string) => void;
 }
 
 export default function TimeSelect({
     name,
+    value,
     defaultValue = '00:00',
     options,
+    onChange,
 }: Props) {
-    const safeDefault =
-        typeof defaultValue === 'number'
-            ? `${String(defaultValue).padStart(2, '0')}:00`
-            : defaultValue;
+    const resolvedValue = value ?? defaultValue;
+    const hour = resolvedValue.split(':')[0] ?? '00';
+    const minute = resolvedValue.split(':')[1] ?? '00';
 
-    const [hour, setHour] = useState(safeDefault.split(':')[0] || '00');
-    const [minute, setMinute] = useState(safeDefault.split(':')[1] || '00');
+    const handleHourChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        onChange?.(`${e.target.value}:${minute}`);
+    };
 
-    const timeValue = `${hour}:${minute}:00`;
+    const handleMinuteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        onChange?.(`${hour}:${e.target.value}`);
+    };
 
     return (
         <div className="flex items-center gap-1 rounded-md border border-input bg-background px-3 py-2 ring-offset-background">
             <select
                 className="border-none bg-transparent p-0 text-sm focus:ring-0"
                 value={hour}
-                onChange={(e) => setHour(e.target.value)}
+                onChange={handleHourChange}
             >
                 {options.hours.map((opt) => (
                     <option key={opt.value} value={opt.value}>
@@ -48,7 +52,7 @@ export default function TimeSelect({
             <select
                 className="border-none bg-transparent p-0 text-sm focus:ring-0"
                 value={minute}
-                onChange={(e) => setMinute(e.target.value)}
+                onChange={handleMinuteChange}
             >
                 {options.minutes.map((opt) => (
                     <option key={opt.value} value={opt.value}>
@@ -57,7 +61,7 @@ export default function TimeSelect({
                 ))}
             </select>
 
-            <input type="hidden" name={name} value={timeValue} />
+            <input type="hidden" name={name} value={`${hour}:${minute}`} />
         </div>
     );
 }

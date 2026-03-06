@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\ShiftPattern;
 use Illuminate\Database\Seeder;
-use App\Enums\ShiftStatus;
+use App\Enums\ShiftType;
 
 class ShiftPatternSeeder extends Seeder
 {
@@ -13,65 +13,65 @@ class ShiftPatternSeeder extends Seeder
     {
        ShiftPattern::create([
             'user_id' => 1,
-            'day_number' => 1,
-            'status' => ShiftStatus::OnDuty,
+            'day' => 1,
+            'shift_type' => ShiftType::OnDuty,
             'start_time' => '19:30',
             'end_time' => '08:00',
             ]);
         ShiftPattern::create([
             'user_id' => 1,
-            'day_number' => 2,
-            'status' => ShiftStatus::OnDuty,
+            'day' => 2,
+            'shift_type' => ShiftType::OnDuty,
             'start_time' => '19:30',
             'end_time' => '08:00',
             ]);
         ShiftPattern::create([
             'user_id' => 1,
-            'day_number' => 3,
-            'status' => ShiftStatus::OnDuty,
+            'day' => 3,
+            'shift_type' => ShiftType::OnDuty,
             'start_time' => '19:30',
             'end_time' => '08:00',
             ]);
          ShiftPattern::create([
             'user_id' => 1,
-            'day_number' => 4,
-            'status' => ShiftStatus::Off,
+            'day' => 4,
+            'shift_type' => ShiftType::Off,
             ]);
         ShiftPattern::create([
             'user_id' => 1,
-            'day_number' => 5,
-            'status' => ShiftStatus::Off,
+            'day' => 5,
+            'shift_type' => ShiftType::Off,
             ]);
 
 
         ShiftPattern::create([
             'user_id' => 2,
-            'day_number' => 1,
-            'status' => ShiftStatus::Off,
+            'day' => 1,
+            'shift_type' => ShiftType::Off,
             ]);
         ShiftPattern::create([
             'user_id' => 2,
-            'day_number' => 2,
-            'status' => ShiftStatus::Off,
+            'day' => 2,
+            'shift_type' => ShiftType::Off,
             ]);
         ShiftPattern::create([
             'user_id' => 2,
-            'day_number' => 3,
-            'status' => ShiftStatus::OnDuty,
+            'day' => 3,
+            'shift_type' => ShiftType::OnDuty,
             'start_time' => '08:00',
             'end_time' => '20:00',
             ]);
          ShiftPattern::create([
             'user_id' => 2,
-            'day_number' => 4,
-            'status' => ShiftStatus::OnDuty,
+            'day' => 4,
+            'shift_type' => ShiftType::OnDuty,
             'start_time' => '19:30',
             'end_time' => '08:00',
             ]);
          ShiftPattern::create([
             'user_id' => 2,
-            'day_number' => 5,
-            'status' => ShiftStatus::OnDuty,
+            'day' => 5,
+            'shift_type' => ShiftType::OnDuty,
             'start_time' => '19:30',
             'end_time' => '08:00',
             ]);
@@ -79,30 +79,30 @@ class ShiftPatternSeeder extends Seeder
         
          ShiftPattern::create([
             'user_id' => 3,
-            'day_number' => 1,
-            'status' => ShiftStatus::Off,
+            'day' => 1,
+            'shift_type' => ShiftType::Off,
             ]);
         ShiftPattern::create([
             'user_id' => 3,
-            'day_number' => 2,
-            'status' => ShiftStatus::Off,
+            'day' => 2,
+            'shift_type' => ShiftType::Off,
             ]);
         ShiftPattern::create([
             'user_id' => 3,
-            'day_number' => 3,
-            'status' => ShiftStatus::Off,
+            'day' => 3,
+            'shift_type' => ShiftType::Off,
             ]);
          ShiftPattern::create([
             'user_id' => 3,
-            'day_number' => 4,
-            'status' => ShiftStatus::OnDuty,
+            'day' => 4,
+            'shift_type' => ShiftType::OnDuty,
             'start_time' => '07:45',
             'end_time' => '15:45',
             ]);
          ShiftPattern::create([
             'user_id' => 3,
-            'day_number' => 5,
-            'status' => ShiftStatus::OnDuty,
+            'day' => 5,
+            'shift_type' => ShiftType::OnDuty,
             'start_time' => '07:45',
             'end_time' => '15:45',
             ]);

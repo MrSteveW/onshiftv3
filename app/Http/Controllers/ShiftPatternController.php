@@ -64,15 +64,15 @@ class ShiftPatternController extends Controller
     {   
         $validated = $request->validate([
             'user_id'=>['required', Rule::exists('users', 'id')],
-            'day_number'=>['required', 'integer'],
+            'day'=>['required', 'integer'],
             'start_time'=>['required', new ValidShiftTime],
             'end_time'=>['required', new ValidShiftTime],
             ]);
 
          $shiftpattern = ShiftPattern::create([
              'user_id' => $validated['user_id'],
-             'day_number' => $validated['day_number'],
-             'status' => 'On Duty',
+             'day' => $validated['day'],
+             'shift_type' => 'On Duty',
              'start_time' => $validated['start_time'],
              'end_time' => $validated['end_time'],
               ]);

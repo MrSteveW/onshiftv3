@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('shift_patterns', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->integer('day_number');
-            $table->string('status');
+            $table->integer('day');
+            $table->string('shift_type');
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->softDeletes();

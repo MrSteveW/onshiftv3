@@ -11,8 +11,8 @@ class ShiftPattern extends Model
 {
       protected $fillable = [
         'user_id',
-        'day_number',
-        'status',
+        'day',
+        'shift_type',
         'start_time',
         'end_time',
     ];

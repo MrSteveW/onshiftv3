@@ -51,3 +51,10 @@ export interface TimeOptions {
     hours: { value: string; label: string }[];
     minutes: { value: string; label: string }[];
 }
+
+export interface ShiftTypeOption {
+    value: string;
+    label: string;
+    start_time: string | null;
+    end_time: string | null;
+}

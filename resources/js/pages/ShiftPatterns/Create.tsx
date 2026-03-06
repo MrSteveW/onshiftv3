@@ -1,4 +1,5 @@
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
+import { route } from 'ziggy-js';
 import ShiftPatternForm from '@/components/ShiftPatternForm';
 import AppLayout from '@/layouts/app-layout';
 
@@ -13,6 +14,8 @@ type CreateProps = {
 };
 
 export default function Create({ users, totalDays }: CreateProps) {
+    const { post, processing, errors } = useForm({ shiftArray: [] });
+
     return (
         <AppLayout>
             <Head title="Shift Patterns" />
@@ -20,8 +23,14 @@ export default function Create({ users, totalDays }: CreateProps) {
                 <ShiftPatternForm
                     users={users}
                     totalDays={totalDays}
-                    action="/shiftpatterns"
-                    method="post"
+                    onSubmit={(shiftArray) =>
+                        post(
+                            route('shift-pattern.store', {
+                                data: { shiftArray },
+                            }),
+                        )
+                    }
+                    errors={errors}
                 />
             </div>
         </AppLayout>

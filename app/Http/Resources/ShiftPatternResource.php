@@ -15,8 +15,8 @@ class ShiftPatternResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'day' => $this->day_number,
-            'status' => $this->status,
+            'day' => $this->day,
+            'shift_type' => $this->shift_type,
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
         ];
