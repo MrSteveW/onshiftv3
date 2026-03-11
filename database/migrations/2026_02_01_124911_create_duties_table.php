@@ -6,27 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('task_user_duty', function (Blueprint $table) {
+        Schema::create('duties', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('task_id')->constrained('tasks');
-            $table->date('dutydate');
-            $table->string('start_time')->nullable();
-            $table->decimal('end_time')->nullable();
-            
+            $table->foreignId('task_id')->nullable()->constrained('tasks');
+            $table->date('date');
+            $table->string('shift_type');
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->integer('duration');
+            $table->string('notes')->nullable();
+            $table->softDeletes();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('task_user_duty');
+        Schema::dropIfExists('duties');
     }
 };

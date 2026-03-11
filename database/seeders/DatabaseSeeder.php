@@ -11,14 +11,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
        $this->call([
+            ShiftRepeatSeeder::class,
+            ShiftPatternOneSeeder::class,
+            ShiftPatternTwoSeeder::class,
+            ShiftPatternThreeSeeder::class,
+            ShiftPatternFourSeeder::class,
+            ShiftPatternFiveSeeder::class,
+            ShiftPatternSixSeeder::class,
+            GradeSeeder::class,
             UserSeeder::class,
             EmployeeSeeder::class,
             TaskSeeder::class,
-            GradeSeeder::class,
             DutySeeder::class,
-            ShiftPatternOneSeeder::class,
-            ShiftPatternTwoSeeder::class,
-            ShiftRepeatSeeder::class,
         ]);
     }
 }

@@ -2,6 +2,7 @@ export const SHIFT_TYPE_COLORS: Record<string, string> = {
     Off: 'bg-white',
     Early: 'bg-amber-200',
     Late: 'bg-green-300',
+    Late2: 'bg-purple-300',
     Night: 'bg-blue-200',
 };
 

@@ -8,34 +8,47 @@ use App\Models\Task;
 use App\Http\Resources\DutyResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\TaskResource;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
-
+use Inertia\Response as InertiaResponse;
+use Carbon\Carbon;
 
 class DutyController extends Controller
 {
-    public function index()
+    public function index(Request $request): Response|JsonResponse|InertiaResponse
     {
-        $selectedDate = request()->query('date');
-        
-        // Always get all tasks
-        $tasks = Task::all();
-
-        if ($selectedDate) {
-            $validatedData = request()->validate([
-            'date' => ['required', 'date_format:Y-m-d']
+        if ($request->expectsJson()) {
+            $request->validate([
+                'start' => ['required', 'date'],
+                'end'   => ['required', 'date'],
             ]);
+            $start = Carbon::parse($request->start)->toDateString();
+            $end   = Carbon::parse($request->end)->toDateString();
 
-             $duties = Duty::with(['user', 'task'])
-            ->whereDate('dutydate', $validatedData['date'])
-            ->get();
-        } else {
-            $duties = collect();
+            $duties = Duty::with('user')
+                ->whereBetween('date', [$start, $end])
+                ->get()
+                ->map(fn (Duty $duty) => [
+                    'id'    => $duty->id,
+                    'title' => $duty->user->name,
+                    'start' => $duty->date . 'T' . $duty->start_time,
+                    'end'   => $duty->end_time < $duty->start_time
+                        ? $duty->date . 'T23:59:00'
+                        : $duty->date . 'T' . $duty->end_time,
+                    'extendedProps' => [
+                        'shift_type' => $duty->shift_type,
+                         'start_time' => $duty->start_time,
+                        'end_time'   => $duty->end_time,
+                        'grade' => $duty->user->employee->grade->name
+                    ],
+                ]);
+
+            return response()->json($duties);
         }
-        return Inertia::render('Duties/Index', [
-            'tasks' => TaskResource::collection($tasks),
-            'duties' => DutyResource::collection($duties),
-            'selectedDate' => $selectedDate ?? null
-         ]);
+
+        return Inertia::render('Duties/Index');
     }
 
 

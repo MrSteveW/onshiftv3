@@ -22,6 +22,8 @@ class ShiftPatternTwoSeeder extends Seeder
             'user_id' => 2,
             'day' => 2,
             'shift_type' => ShiftType::Off,
+            'start_time' => '00:00',
+            'end_time' => '00:00',
             ]);
         ShiftPattern::create([
             'user_id' => 2,
