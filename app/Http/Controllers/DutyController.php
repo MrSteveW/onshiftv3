@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 use Carbon\Carbon;
+use Illuminate\Validation\Rule;
 
 class DutyController extends Controller
 {
@@ -39,8 +40,9 @@ class DutyController extends Controller
                         : $duty->date . 'T' . $duty->end_time,
                     'extendedProps' => [
                         'shift_type' => $duty->shift_type,
-                         'start_time' => $duty->start_time,
+                        'start_time' => $duty->start_time,
                         'end_time'   => $duty->end_time,
+                        'notes'   => $duty->notes,
                         'grade' => $duty->user->employee->grade->name
                     ],
                 ]);
@@ -90,34 +92,15 @@ class DutyController extends Controller
     return redirect('/duties');
 }
 
-    // public function show(Duty $duty)
-    // {
-    //     return view('duties.show', ['duty' => $duty]);
-    // }
-
-    // public function edit(Duty $duty)
-    // {
-    //     return view('duties.edit', [
-    //         'duty' => $duty,
-    //         'users' => User::all(),
-    //         'tasks' => Task::all(),
-    //     ]);
-    // }
-
     public function update(Duty $duty)
     {
-        request()->validate([
-        'user_id'=>['required'],
-        'task_id'=>['required'],
-        'dutydate'=>['required'],
-        ]);
-
-        $duty->update([
-            'user_id' => request('user_id'),
-            'task_id' => request('task_id'),
-            'dutydate' => request('dutydate')
-        ]);
-        return redirect('duties/'.$duty->id);
+        // 11.3 require an Absence reason if soft deleting a Duty record :)
+        $request->validate([
+    'absence' => [
+        'nullable',
+        Rule::when($duty->deleted_at !== null, ['required']),
+    ],
+]);
     }
 
     public function destroy(Duty $duty)

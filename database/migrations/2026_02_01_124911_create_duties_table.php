@@ -18,6 +18,7 @@ return new class extends Migration
             $table->time('end_time');
             $table->integer('duration');
             $table->string('notes')->nullable();
+            $table->string('absence')->nullable();
             $table->softDeletes();
         });
     }

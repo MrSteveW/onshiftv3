@@ -1,24 +1,30 @@
-import type { EventApi, EventContentArg } from '@fullcalendar/core';
+import type { DutyEvent } from '@/types.ts';
 
 interface IndexCardProps {
-    dutyInfo: EventContentArg;
-    // handleEventSelect: (event: EventApi) => void;
+    dutyEvent: DutyEvent;
+    handleEventSelect: (dutyEvent: DutyEvent) => void;
 }
 
-export default function DutyIndexCard({ dutyInfo }: IndexCardProps) {
+export default function DutyIndexCard({
+    dutyEvent,
+    handleEventSelect,
+}: IndexCardProps) {
     return (
-        <div className="m-2 w-full border">
-            {/* <div className="text-xs">{JSON.stringify(dutyInfo)}</div> */}
+        <div
+            onClick={() => handleEventSelect(dutyEvent)}
+            className="m-2 w-full border"
+        >
+            {/* <div className="text-xs">{JSON.stringify(dutyEvent)}</div> */}
             <div className="flex">
-                <div className="">{dutyInfo.event.title}</div>
-                <div className="">{dutyInfo.event.extendedProps.grade}</div>
+                <div className="">{dutyEvent.name}</div>
+                <div className="">{dutyEvent.grade}</div>
             </div>
             <div className="flex">
                 <div>
-                    <div>{dutyInfo?.event?.extendedProps.start_time}</div>
+                    <div>{dutyEvent?.start_time}</div>
                 </div>
                 <div>:</div>
-                <div>{dutyInfo?.event?.extendedProps.end_time}</div>
+                <div>{dutyEvent?.end_time}</div>
             </div>
         </div>
     );

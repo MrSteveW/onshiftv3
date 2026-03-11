@@ -71,3 +71,15 @@ export interface ShiftPatternDay {
     start_time: string;
     end_time: string;
 }
+
+export interface DutyEvent {
+    id: string;
+    name: string;
+    start: string;
+    end: string;
+    shift_type: string;
+    start_time: string;
+    end_time: string;
+    grade: string;
+    notes: string;
+}
