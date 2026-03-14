@@ -17,7 +17,7 @@ export default function ShiftPatternViewCard({ shift }: ViewCardProps) {
     return (
         <div>
             <div
-                className={`${bgColor} flex h-8 flex-col items-center justify-center border-r border-b p-2 text-[11px]`}
+                className={`${bgColor} flex h-8 flex-col items-center justify-center border-r border-b p-2 text-[10.5px]`}
             >
                 {shift?.shift_type === 'Off' ? (
                     'Off'

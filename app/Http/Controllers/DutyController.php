@@ -44,7 +44,7 @@ class DutyController extends Controller
                         'start_time' => $duty->start_time,
                         'end_time'   => $duty->end_time,
                         'notes'      => $duty->notes,
-                        'grade'      => $duty->user->employee->grade->name
+                        'grade'      => $duty->user->employee?->grade?->name ?? '',
                     ],
                 ]);
 

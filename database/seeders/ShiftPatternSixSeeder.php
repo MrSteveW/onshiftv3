@@ -65,13 +65,13 @@ class ShiftPatternSixSeeder extends Seeder
             'day' => 9,
             'shift_type' => ShiftType::Night,
             'start_time' => '20:00',
-            'end_time' => '80:00',
+            'end_time' => '08:00',
             ]);
         ShiftPattern::create([
             'user_id' => 6,
             'day' => 10,
             'shift_type' => ShiftType::Night,
-            'start_time' => '80:00',
+            'start_time' => '08:00',
             'end_time' => '20:00',
             ]);
         ShiftPattern::create([

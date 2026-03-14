@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ShiftPatternNineSeeder::class,
             ShiftPatternTenSeeder::class,
             ShiftPatternElevenSeeder::class,
+            ShiftPatternTwelveSeeder::class,
             GradeSeeder::class,
             UserSeeder::class,
             EmployeeSeeder::class,

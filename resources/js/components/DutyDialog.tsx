@@ -131,7 +131,7 @@ export default function DutyDialog({
                         <Label htmlFor="date" className="text-xl">
                             Duty date
                         </Label>
-                        <div className="col-span-3">
+                        <div className="col-span-3 [&_.react-calendar]:bg-white [&_.react-date-picker__wrapper]:bg-white">
                             <DatePicker
                                 value={new Date(data.date)}
                                 onChange={(date) => {
@@ -221,24 +221,27 @@ export default function DutyDialog({
                     </div>
 
                     <DialogFooter>
-                        <DialogClose asChild>
-                            <Button variant="outline">Close</Button>
-                        </DialogClose>
+                        <div className="mr-6">
+                            <DialogClose asChild>
+                                <Button variant="outline">Close</Button>
+                            </DialogClose>
 
-                        <Button type="submit" disabled={processing}>
-                            Save
-                        </Button>
-
-                        {method === 'patch' && (
-                            <DutyArchive
-                                url={`/duties/${data.id}`}
-                                absenceOptions={absenceOptions}
-                                onSuccess={() => {
-                                    onSuccess?.();
-                                    onClose(false);
-                                }}
-                            />
-                        )}
+                            <Button type="submit" disabled={processing}>
+                                Save
+                            </Button>
+                        </div>
+                        <div>
+                            {method === 'patch' && (
+                                <DutyArchive
+                                    url={`/duties/${data.id}`}
+                                    absenceOptions={absenceOptions}
+                                    onSuccess={() => {
+                                        onSuccess?.();
+                                        onClose(false);
+                                    }}
+                                />
+                            )}
+                        </div>
                     </DialogFooter>
                 </form>
             </DialogContent>

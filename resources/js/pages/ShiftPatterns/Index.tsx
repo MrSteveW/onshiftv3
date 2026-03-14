@@ -27,7 +27,7 @@ interface Props {
 }
 
 export default function Index({ shiftpatterns, dayNames }: Props) {
-    const gridTemplateColumns = `40px 80px repeat(${shiftpatterns.length}, 80px)`;
+    const gridTemplateColumns = `40px 80px repeat(${shiftpatterns.length}, 70px)`;
     return (
         <AppLayout>
             <Head title="Shift patterns" />
@@ -41,7 +41,7 @@ export default function Index({ shiftpatterns, dayNames }: Props) {
                     {shiftpatterns.map((user) => (
                         <div
                             key={user.user_id}
-                            className="sticky top-0 z-20 border-r border-b bg-amber-100 p-2 text-center font-bold hover:text-blue-600"
+                            className="sticky top-0 z-20 border-r border-b bg-amber-100 p-2 text-center text-sm font-bold hover:text-blue-600"
                         >
                             <Link href={`/shiftpatterns/${user.user_id}/edit`}>
                                 {user.user_name}
