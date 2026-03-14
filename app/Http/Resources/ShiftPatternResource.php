@@ -4,7 +4,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Carbon\Carbon;
 
 class ShiftPatternResource extends JsonResource
 {
@@ -18,8 +17,8 @@ class ShiftPatternResource extends JsonResource
         return [
             'day' => $this->day,
             'shift_type' => $this->shift_type,
-            'start_time' => Carbon::createFromFormat('H:i:s', $this->start_time)->format('H:i'),
-            'end_time'   => Carbon::createFromFormat('H:i:s', $this->end_time)->format('H:i'),
+            'start_time' => $this->start_time ? substr($this->start_time, 0, 5) : null,
+            'end_time'   => $this->end_time   ? substr($this->end_time, 0, 5)   : null,
         ];
     }
 }

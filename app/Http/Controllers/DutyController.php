@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Duty;
 use App\Models\User;
 use App\Models\Task;
-use App\Http\Resources\DutyResource;
-use App\Http\Resources\UserResource;
 use App\Http\Resources\TaskResource;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -34,15 +32,15 @@ class DutyController extends Controller
                 ->map(fn (Duty $duty) => [
                     'id'    => $duty->id,
                     'title' => $duty->user->name,
-                    'start' => $duty->date . 'T' . $duty->start_time,
+                    'start' => $duty->date . 'T' . $duty->start_time . ':00',
                     'end'   => $duty->end_time < $duty->start_time
                         ? $duty->date . 'T23:59:00'
-                        : $duty->date . 'T' . $duty->end_time,
+                        : $duty->date . 'T' . $duty->end_time . ':00',
                     'extendedProps' => [
                         'user_id'    => $duty->user_id,
                         'shift_type' => $duty->shift_type,
-                        'start_time' => Carbon::createFromFormat('H:i:s', $duty->start_time)->format('H:i'),
-                        'end_time'   => Carbon::createFromFormat('H:i:s', $duty->end_time)->format('H:i'),
+                        'start_time' => $duty->start_time,
+                        'end_time'   => $duty->end_time,
                         'notes'      => $duty->notes,
                         'grade'      => $duty->user->employee?->grade?->name ?? '',
                     ],

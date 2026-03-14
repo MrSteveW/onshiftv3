@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 
 class ShiftPattern extends Model
@@ -32,6 +33,20 @@ class ShiftPattern extends Model
  public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    protected function startTime(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => $value ? substr($value, 0, 5) : null,
+        );
+    }
+
+protected function endTime(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => $value ? substr($value, 0, 5) : null,
+        );
     }
 
 }
